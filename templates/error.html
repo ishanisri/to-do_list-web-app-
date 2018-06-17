@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Unauthorized Access:: Python Flask Bucket List App</title>
+ 
+ 
+    
+</head>
+ 
+<body>
+ 
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul class="nav nav-pills pull-right">
+                    <li role="presentation" class="active"><a href="/">Home</a>
+                    </li>
+                    <li role="presentation"><a href="/showSignIn">Sign In</a>
+                    </li>
+                    <li role="presentation"><a href="/showSignUp">Sign Up</a>
+                    </li>
+                </ul>
+            </nav>
+            <h3 class="text-muted">Python Flask App</h3>
+        </div>
+ 
+        <div class="jumbotron">
+            <h1>{{error}}</h1>
+        </div>
+ 
+ 
+ 
+        
+ 
+    </div>
+</body>
+ 
+</html>
+
+
+
+
+
+<!--def validateLogin():
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    try:
+          _user=session.get('user')
+         _task_name= request.form['label']
+        _task_list = request.form['checkbox']
+        
+
+        cursor.callproc('sp_AddTasks',_user)
+        data = cursor.fetchall()
+        tasks_dict = []
+            for work in data:
+                task_dict = {
+                        'Id': work[0],
+                        'Task': work[1]}
+                 tasks_dict.append(task_dict) 
+        return json.dumps(tasks_dict)               
+
+                return render_template('error.html',error = 'Wrong Email address or Password.')
+        else:
+            return render_template('error.html',error = 'Wrong Email address or Password.')                  
+
+ 
+    except Exception as e:
+        return render_template('error.html',error = str(e))
+    finally:
+        cursor.close()
+        con.close()-->
+        
+
+            

@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Flask To-Do List App</title>
+ 
+ 
+    
+    <link href="../static/signup.css" rel="stylesheet">
+ 
+ 
+</head>
+ 
+<body>
+ 
+    <div class="container" id="cblist">
+        <div class="header">
+            <nav>
+                
+                    <a href="/logout">Logout</a>
+                    
+                
+            </nav>
+
+        </div>
+ 
+        <div class="jumbotron">
+            <h1 >Welcome Home !!</h1>
+ 
+        </div>
+
+     <br>
+     <br><h3>To-Do List</h3>
+     <div id="toDoList" class="container"><form>
+        <button id="btnSave" type="submit" action="/getList"> Save</button></div><br>
+        <div>
+        <ul  class="toDoList">
+           {% for row in lists_dict %}
+          
+           {% if row.checked=='on' %}
+           <li><input type='checkbox' id='cb'+row.id  name="{{row.Task}}" checked ><label class="label">{{row.Task}}</label></li>
+    {% else %}
+           <li><input type='checkbox' id='cb'+row.id  name="{{row.Task}}"  ><label class="label">{{row.Task}}</label></li>
+    {% endif %}
+
+            
+            {% endfor %}
+
+        </ul></div></form><br>
+
+     
+     <div id="AddToList">
+       <form action="toDoList" method="POST">  
+      <div><label>Enter task </label>
+      <input id="task" placeholder="Write the task" name="toDo"></div>
+      <button type="submit" id="btnAddToList"  >Add to to-do list</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    
+     <div id="createNotes"><form action="/showCreateNotes">
+        <button type="submit" value="Create Notes" id="btnCreateNotes">Create Notes</button><form>
+    </div>
+    <div class="see notes">
+      <h3> Notes</h3>
+      <table border = 1 id="seeNotes">
+        <tr>
+        <th> S.No </th>
+               <th>Title</th>
+               <th>Description</th>
+             </tr>
+         {% for row in result_dict %}
+         
+            <tr>
+
+
+               <td> {{ row.No }} </td>
+               <td>{{row.Title}}</td>
+               <td>{{row.Description}}</td>
+            </tr>
+            
+         {% endfor %}
+      </table>
+      
+    </div>
+ 
+        
+ 
+    </div>
+    <script src="https://code.jquery.com/jquery-1.12.4.js" integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+
+    <script>
+    $(document).ready(function(){
+      $('#btnSave').click(function() {
+        var done=[]
+        var label=$('.label');
+        cid='cb'+(0+1);
+        console.log(cid)
+        var x=$('#'+cid).checked;
+        console.log(x)
+        for(var i=0;i<label.length;i++){
+          id="cb"+(i+1);
+          if($('#' + id).checked===true)
+            {done.push(label[i].innerHTML);
+            }
+
+
+        }
+        console.log(done);
+        $.ajax({
+            url: '/getList',
+            type: 'GET',
+            data:done,
+
+
+    
+            success: function(res) {
+                console.log(res);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });});
+</script>
+<!--<script type="text/javascript">
+$(document).ready(function() {
+    $('#btnAddToList').click(function() {
+        addCheckbox($('#task').val());
+        $('#task').val="";
+    });
+});
+
+function addCheckbox(name) {
+   var container = $('#toDoList');
+   var inputs = container.find('input');
+   var id = inputs.length+1;
+
+   $('<input />', { type: 'checkbox', id: 'cb'+id, value: name ,name:'input'}).appendTo(container);
+   $('<label />', { 'for': 'cb'+id, text: name, name:'label' }).appendTo(container);
+}
+</script>-->
+</body><style>
+#btnSave,#btnAddToList,#btnCreateNotes {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+
+#btnSave:hover,#btnAddToList,#btnCreateNotes {
+    background-color: #45a049;}
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+.form-group{ border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+h1{
+  color:orange;
+}
+#seeNotes {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#seeNotes td, #seeNotes th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#seeNotes tr:nth-child(even){background-color: #f2f2f2;}
+
+#seeNotes tr:hover {background-color: #ddd;}
+
+#seeNotes th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+*{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+
+ul {
+  list-style-type: none;
+    background: #3399ff;
+    padding: 20px;
+}
+    ul li {
+    background: #cce5ff;
+    margin: 5px;
+}
+
+</style>
+ 
+</html>
